@@ -8,7 +8,6 @@ void main() {
 class CryptoCurrenciesList extends StatelessWidget {
   const CryptoCurrenciesList({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,21 +43,25 @@ class CryptoCurrenciesList extends StatelessWidget {
 
         )
       ),
-      home: const MyHomePage(title: 'Crypto Currencies List'),
+      //home: const CryptoListScreen(title: 'Crypto Currencies List'),
+      routes: {
+        '/': (context) => CryptoListScreen(title: "Crypto Currencies List"),
+        '/coin': (context) => CryptoCoinScreen()
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class CryptoListScreen extends StatefulWidget {
+  const CryptoListScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CryptoListScreen> createState() => _CryptoListScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CryptoListScreenState extends State<CryptoListScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +88,36 @@ class _MyHomePageState extends State<MyHomePage> {
           trailing: const Icon(
               Icons.arrow_forward_ios
              ),
-          ),
+
+          onTap: () {
+              Navigator.of(context).pushNamed(
+                '/coin'
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+
+class CryptoCoinScreen extends StatelessWidget {
+  const CryptoCoinScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("This is CryptoListScreen"),
+        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white60,),
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                  '/'
+              );
+            },
+        ),
       ),
     );
   }
