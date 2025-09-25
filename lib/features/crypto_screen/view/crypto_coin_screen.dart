@@ -25,12 +25,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
       appBar: AppBar(
         title: Text(coinName ?? '...'),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white60),
-
-          onPressed: () {
-            Navigator.of(context).pushNamed('/');
-          },
+        leading: BackButton(
+          color: Color.fromARGB(255, 238, 238, 238),
         ),
       ),
       body: Center(
@@ -45,7 +41,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                 offset: Offset(4, 4),
               ),
             ],
-            border: Border.all(color: Colors.white, width: 3),
+            border: Border.all(color: Colors.white, width: 2),
           ),
           child: Padding(
             padding: EdgeInsets.all(20),

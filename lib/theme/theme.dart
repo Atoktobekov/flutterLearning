@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'text_theme.dart';
 
 final darkTheme = ThemeData(
   appBarTheme: AppBarTheme(
@@ -20,17 +21,5 @@ final darkTheme = ThemeData(
 
   listTileTheme: const ListTileThemeData(iconColor: Colors.white),
 
-  textTheme: TextTheme(
-    bodyMedium: const TextStyle(
-      color: Colors.white,
-      fontWeight: FontWeight.w600,
-      fontSize: 20,
-    ),
-
-    titleSmall: TextStyle(
-      color: Colors.white.withOpacity(.7),
-      fontWeight: FontWeight.w700,
-      fontSize: 16,
-    ),
-  ),
+  textTheme: textTheme,
 );
