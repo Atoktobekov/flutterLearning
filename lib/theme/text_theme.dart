@@ -8,7 +8,7 @@ final textTheme = TextTheme(
   ),
 
   titleSmall: TextStyle(
-    color: Colors.white.withOpacity(.7),
+    color: Colors.white.withAlpha(217),
     fontWeight: FontWeight.w700,
     fontSize: 16,
   ),
