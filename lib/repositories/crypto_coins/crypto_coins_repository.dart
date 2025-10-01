@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:learning/repositories/models/crypto_coin.dart';
@@ -20,7 +22,7 @@ class CryptoCoinsRepository {
 
       return cryptoCoinsList;
     } catch (e) {
-      debugPrint("Ошибка при запросе: $e");
+      log("Ошибка при запросе: $e");
       return [];
     }
   }

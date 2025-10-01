@@ -25,24 +25,23 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
         centerTitle: true,
       ),
 
-      body: ListView.separated(
-        separatorBuilder: (context, index) =>
-            Divider(color: theme.dividerColor),
-        itemCount: 20,
-        itemBuilder: (context, i) {
-          const coinName = 'Bitcoin';
-
-          return const CryptoCoinTile(coinName: coinName);
-        },
-      ),
+      body: (_cryptoCoinsList == null)
+          ? const SizedBox()
+          : ListView.separated(
+              separatorBuilder: (context, index) =>
+                  Divider(color: theme.dividerColor),
+              itemCount: _cryptoCoinsList!.length,
+              itemBuilder: (context, i) {
+                final coin = _cryptoCoinsList![i];
+                return CryptoCoinTile(coin: coin);
+              },
+            ),
 
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.download),
         onPressed: () async {
-         final coins = await CryptoCoinsRepository().getCoinsList();
-         for(var coin in coins){
-           log(coin.toString());
-         }
+          _cryptoCoinsList = await CryptoCoinsRepository().getCoinsList();
+          setState(() {});
         },
       ),
     );
