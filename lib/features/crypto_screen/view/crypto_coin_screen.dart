@@ -25,29 +25,10 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
       appBar: AppBar(
         title: Text(coinName ?? '...'),
         centerTitle: true,
-        leading: BackButton(
-          color: Color.fromARGB(255, 238, 238, 238),
-        ),
+        leading: BackButton(color: Color.fromARGB(255, 238, 238, 238)),
       ),
       body: Center(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 219, 152, 40),
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: Offset(4, 4),
-              ),
-            ],
-            border: Border.all(color: Colors.white, width: 2),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Text("Crypto Coin List", style: TextStyle(fontSize: 22)),
-          ),
-        ),
+        child: Text("Crypto Coin List", style: TextStyle(fontSize: 22)),
       ),
     );
   }
