@@ -9,7 +9,7 @@ final darkTheme = ThemeData(
       fontSize: 22,
       fontWeight: FontWeight.w700,
     ),
-    elevation: 1,
+    elevation: 0,
     shadowColor: Colors.white24,
   ),
 
