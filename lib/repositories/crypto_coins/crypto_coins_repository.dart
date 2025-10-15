@@ -9,7 +9,6 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository{
 
   @override
   Future<List<CryptoCoin>> getCoinsList() async {
-    try {
       final response = await dio.get(
         "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,BNB,AVAX,AID,DOV,CAG&tsyms=USD",
       );
@@ -31,9 +30,5 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository{
       }).toList();
 
       return cryptoCoinsList;
-    } catch (e) {
-      log("Ошибка при запросе: $e");
-      return [];
     }
-  }
 }
