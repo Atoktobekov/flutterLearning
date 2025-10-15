@@ -12,4 +12,16 @@ final textTheme = TextTheme(
     fontWeight: FontWeight.w700,
     fontSize: 16,
   ),
+
+  headlineMedium: TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w600,
+    fontSize: 20
+  ),
+
+  labelSmall: TextStyle(
+    color: Colors.white.withAlpha(227),
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+  )
 );
