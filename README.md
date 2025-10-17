@@ -43,5 +43,14 @@ created to understand:
 | Dependency Injection | [`get_it`](https://pub.dev/packages/get_it) |
 
 ---
+## 📸 Screenshots
+
+
+<p align="center">
+  <img src="screenshots/Screenshot_learning (1).png" width="30%">
+  <img src="screenshots/Screenshot_learning (2).png" width="30%">
+</p>
+
+---
 ## Author👨‍💻 [Adi](https://github.com/Atoktobekov)
 🎯 Just a simple start to a big journey with Flutter.
