@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'dart:math';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 class CryptoCoinsRepository implements IfCryptoCoinsRepository{
 
@@ -24,7 +25,7 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository{
         final imageURL = usdData['IMAGEURL'];
         return CryptoCoin(
             name: entry.key,
-            priceUSD: price,
+            priceUSD: (entry.key == "DOV" ||entry.key == "CAG" || entry.key == "AID") ? price : roundTo(price, 3),
             imageUrl:"https://www.cryptocompare.com/$imageURL");
       }).toList();
 
@@ -49,12 +50,17 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository{
 
     return CryptoCoinDetails(
       name: currencyCode,
-      priceUSD: price,
+      priceUSD: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? price : roundTo(price, 6),
       imageUrl: 'https://www.cryptocompare.com/$imageUrl',
       toSymbol: toSymbol,
       lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
-      high24Hour: high24Hour,
-      low24Hours: low24Hours,
+      high24Hour: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? price : roundTo(high24Hour, 6),
+      low24Hours: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? price : roundTo(low24Hours, 6),
     );
+  }
+
+  double roundTo(double value, int places) {
+    num mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 }
