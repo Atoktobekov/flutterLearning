@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 part 'crypto_list_event.dart';
 part 'crypto_list_state.dart';
 
@@ -15,8 +17,9 @@ class CryptoListBloc extends Bloc<CryptoListEvent, CryptoListState>{
       }
       final coinsList = await _coinsRepository.getCoinsList();
       emit(CryptoListLoaded(coinsList: coinsList));
-    } catch (e) {
-      emit(CryptoListLoadingFailure(e));
+    } catch (exception, stackTrace) {
+      emit(CryptoListLoadingFailure(exception));
+      GetIt.instance<Talker>().handle(exception, stackTrace);
     }
     finally {
       event.completer?.complete();
@@ -25,4 +28,10 @@ class CryptoListBloc extends Bloc<CryptoListEvent, CryptoListState>{
   }
 
   final IfCryptoCoinsRepository _coinsRepository;
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+    GetIt.instance<Talker>().handle(error, stackTrace, "message from onError method of BLoC");
+  }
 }
