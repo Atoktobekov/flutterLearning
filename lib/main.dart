@@ -11,7 +11,13 @@ import 'app.dart';
 
 void main() {
   final talker = TalkerFlutter.init();
-  Bloc.observer = TalkerBlocObserver(talker: talker);
+  Bloc.observer = TalkerBlocObserver(
+    talker: talker,
+    settings: const TalkerBlocLoggerSettings(
+      printEventFullData: false,
+      printStateFullData: false,
+    ),
+  );
   GetIt.instance.registerSingleton(talker);
 
   GetIt.instance<Talker>().debug("Talker started!");
@@ -20,7 +26,7 @@ void main() {
   dio.interceptors.add(
     TalkerDioLogger(
       settings: const TalkerDioLoggerSettings(printResponseData: false),
-      talker: talker
+      talker: talker,
     ),
   );
 
