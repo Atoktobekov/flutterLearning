@@ -41,6 +41,7 @@ created to understand:
 | Equality Handling | [`equatable`](https://pub.dev/packages/equatable) |
 | HTTP Client | [`dio`](https://pub.dev/packages/dio) |
 | Dependency Injection | [`get_it`](https://pub.dev/packages/get_it) |
+| Logging | [`talker`](https://pub.dev/packages/talker_flutter) |
 
 ---
 ## 📸 Screenshots
