@@ -8,6 +8,7 @@ environment:
   sdk: ^3.8.0
 
 dependencies:
+  firebase_core: ^4.2.0
   talker_bloc_logger: ^5.0.2
   talker_dio_logger: ^5.0.2
   talker_flutter: ^5.0.2
