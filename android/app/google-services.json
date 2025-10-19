@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "557299752863",
+    "project_id": "crypto-list-app-c090f",
+    "storage_bucket": "crypto-list-app-c090f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557299752863:android:84acdfbb3beb21424f27aa",
+        "android_client_info": {
+          "package_name": "com.example.learning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqMbBVaHmtJE1U2zN64lgsHjY-4up2x-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
