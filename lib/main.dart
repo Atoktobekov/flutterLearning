@@ -22,9 +22,8 @@ Future<void> main() async {
       printStateFullData: false,
     ),
   );
-  GetIt.instance.registerSingleton(talker);
 
-  GetIt.instance<Talker>().debug("Talker started!");
+  GetIt.instance.registerSingleton(talker);
 
   final dio = Dio();
 
@@ -35,11 +34,9 @@ Future<void> main() async {
     ),
   );
 
-  final app = await Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  talker.info(app.options.projectId);
 
   GetIt.instance.registerLazySingleton<IfCryptoCoinsRepository>(
     () => CryptoCoinsRepository(dio: dio),
