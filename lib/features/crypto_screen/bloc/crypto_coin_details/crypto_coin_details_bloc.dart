@@ -1,34 +1,45 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 
 part 'crypto_coin_details_event.dart';
+
 part 'crypto_coin_details_state.dart';
 
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
+
+  DateTime? updateTime;
+
   CryptoCoinDetailsBloc(this.coinsRepository)
-      : super(const CryptoCoinDetailsState()) {
+    : super(const CryptoCoinDetailsState()) {
     on<LoadCryptoCoinDetails>(_load);
   }
 
   final IfCryptoCoinsRepository coinsRepository;
 
   Future<void> _load(
-      LoadCryptoCoinDetails event,
-      Emitter<CryptoCoinDetailsState> emit,
-      ) async {
+    LoadCryptoCoinDetails event,
+    Emitter<CryptoCoinDetailsState> emit,
+  ) async {
     try {
       if (state is! CryptoCoinDetailsLoaded) {
         emit(const CryptoCoinDetailsLoading());
       }
 
-      final coinDetails =
-      await coinsRepository.getCoinDetails(event.currencyCode);
+      final coinDetails = await coinsRepository.getCoinDetails(
+        event.currencyCode,
+      );
+      updateTime = DateTime.now();
 
       emit(CryptoCoinDetailsLoaded(coinDetails));
     } catch (e) {
       emit(CryptoCoinDetailsLoadingFailure(e));
+    }
+    finally{
+      event.completer?.complete();
     }
   }
 }

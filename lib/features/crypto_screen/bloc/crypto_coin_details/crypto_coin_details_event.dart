@@ -5,16 +5,19 @@ abstract interface class CryptoCoinDetailsEvent extends Equatable {
   const CryptoCoinDetailsEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadCryptoCoinDetails extends CryptoCoinDetailsEvent {
+  final Completer? completer;
+
   const LoadCryptoCoinDetails({
     required this.currencyCode,
+    this.completer
   });
 
   final String currencyCode;
 
   @override
-  List<Object> get props => super.props..add(currencyCode);
+  List<Object?> get props =>  [...super.props, currencyCode, completer];
 }
