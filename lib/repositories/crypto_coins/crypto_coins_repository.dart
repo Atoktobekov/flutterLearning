@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'dart:math';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 class CryptoCoinsRepository implements IfCryptoCoinsRepository{
 
   CryptoCoinsRepository({required this.dio});
@@ -41,12 +43,13 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository{
     final dataRaw = data['RAW'] as Map<String, dynamic>;
     final coinData = dataRaw[currencyCode] as Map<String, dynamic>;
     final usdData = coinData['USD'] as Map<String, dynamic>;
-    final price = usdData['PRICE'];
+    final double price = usdData['PRICE'];
     final imageUrl = usdData['IMAGEURL'];
     final toSymbol = usdData['TOSYMBOL'];
     final lastUpdate = usdData['LASTUPDATE'];
     final high24Hour = usdData['HIGH24HOUR'];
     final low24Hours = usdData['LOW24HOUR'];
+    final double change24Hours = (usdData["CHANGE24HOUR"] as num).toDouble();
 
     return CryptoCoinDetails(
       name: currencyCode,
@@ -54,13 +57,20 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository{
       imageUrl: 'https://www.cryptocompare.com/$imageUrl',
       toSymbol: toSymbol,
       lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
-      high24Hour: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? price : roundTo(high24Hour, 6),
-      low24Hours: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? price : roundTo(low24Hours, 6),
+      high24Hours: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? high24Hour : roundTo(high24Hour, 3),
+      low24Hours: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? low24Hours : roundTo(low24Hours, 3),
+      change24Hours: (currencyCode == "AID" || currencyCode == "DOV" || currencyCode == "CAG") ? change24Hours : roundTo(change24Hours, 3)
     );
   }
 
   double roundTo(double value, int places) {
+    try {
     num mod = pow(10.0, places);
     return ((value * mod).round().toDouble() / mod);
+  }
+  catch (e){
+      GetIt.instance<Talker>().info(e);
+      return 1.0;
+  }
   }
 }

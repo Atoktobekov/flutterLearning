@@ -7,8 +7,9 @@ class CryptoCoinDetails extends CryptoCoin {
     required super.imageUrl,
     required this.toSymbol,
     required this.lastUpdate,
-    required this.high24Hour,
+    required this.high24Hours,
     required this.low24Hours,
+    required this.change24Hours
   });
 
   // TOSYMBOL
@@ -18,17 +19,21 @@ class CryptoCoinDetails extends CryptoCoin {
   final DateTime lastUpdate;
 
   // HIGH24HOUR
-  final double high24Hour;
+  final double high24Hours;
 
   // LOW24HOUR
   final double low24Hours;
+
+  //change in 24 hours
+  final double change24Hours;
 
   @override
   List<Object?> get props => super.props
     ..addAll([
       toSymbol,
       lastUpdate,
-      high24Hour,
+      high24Hours,
       low24Hours,
+      change24Hours
     ]);
 }
