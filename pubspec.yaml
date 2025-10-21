@@ -8,6 +8,7 @@ environment:
   sdk: ^3.8.0
 
 dependencies:
+  json_annotation: ^4.9.0
   firebase_core: ^4.2.0
   talker_bloc_logger: ^5.0.2
   talker_dio_logger: ^5.0.2
@@ -23,6 +24,8 @@ dependencies:
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
+  json_serializable: ^6.11.1
+  build_runner:
   flutter_test:
     sdk: flutter
 
