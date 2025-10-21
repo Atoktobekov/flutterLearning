@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -64,7 +65,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
           bloc: _coinDetailsBloc,
           builder: (context, state) {
             if (state is CryptoCoinDetailsLoaded) {
-              final coinDetails = state.coinDetails;
+              final coin = state.coin;
               _startTimer(); // start after loading
 
               return SingleChildScrollView(
@@ -80,11 +81,11 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                     SizedBox(
                       height: 160,
                       width: 160,
-                      child: Image.network(coinDetails.imageUrl),
+                      child: Image.network(coin.details.fullImageUrl),
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      coinDetails.name,
+                      coin.name,
                       style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w700,
@@ -94,7 +95,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                     BaseCard(
                       child: Center(
                         child: Text(
-                          '${coinDetails.priceUSD} \$',
+                          '${roundTo(coin.name, coin.details.priceUSD)} \$',
                           style: const TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w700,
@@ -107,17 +108,17 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                         children: [
                           _DataRow(
                             title: 'High 24 Hour',
-                            value: '${coinDetails.high24Hours} \$',
+                            value: '${roundTo(coin.name, coin.details.high24Hours)} \$',
                           ),
                           const SizedBox(height: 10),
                           _DataRow(
                             title: 'Low 24 Hour',
-                            value: '${coinDetails.low24Hours} \$',
+                            value: '${roundTo(coin.name, coin.details.low24Hours)} \$',
                           ),
                           const SizedBox(height: 10),
                           _DataRow(
                             title: 'Change 24 Hour',
-                            value: '${coinDetails.change24Hours} \$',
+                            value: '${roundTo(coin.name, coin.details.change24Hours)} \$',
                           ),
                           const SizedBox(height: 10),
                           _DataRow(
@@ -211,4 +212,12 @@ String _formatElapsed(Duration elapsed) {
   } else {
     return '${elapsed.inDays} days ago';
   }
+}
+
+double roundTo(String name, double value) {
+  if(name == "AID" || name == "CAG" || name == "DOV"){
+    return value;
+  }
+  num mod = pow(10.0, 5);
+  return ((value * mod).round().toDouble() / mod);
 }
