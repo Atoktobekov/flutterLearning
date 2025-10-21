@@ -18,8 +18,8 @@ Future<void> main() async {
   Bloc.observer = TalkerBlocObserver(
     talker: talker,
     settings: const TalkerBlocLoggerSettings(
-      printEventFullData: false,
-      printStateFullData: false,
+      printEventFullData: true,
+      printStateFullData: true,
     ),
   );
 
