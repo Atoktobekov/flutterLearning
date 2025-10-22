@@ -45,7 +45,10 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
                 ),
               );
             },
-            icon: const Icon(Icons.document_scanner_outlined, color: Colors.white60),
+            icon: const Icon(
+              Icons.document_scanner_outlined,
+              color: Colors.white60,
+            ),
           ),
         ],
       ),
@@ -60,30 +63,50 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
           bloc: _cryptoListBloc,
           builder: (context, state) {
             if (state is CryptoListLoaded) {
-              return ListView.separated(
-                padding: const EdgeInsets.only(top: 16),
-                separatorBuilder: (context, index) =>
-                    Divider(color: theme.dividerColor),
-                itemCount: state.coinsList.length,
-                itemBuilder: (context, i) {
-                  final coin = state.coinsList[i];
-                  return CryptoCoinTile(coin: coin);
-                },
+              final message = state.infoMessage;
+              return Column(
+                children: [
+                  if (message != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 12.0, right: 6.0),
+                      child: Text(
+                        message,
+                        style: theme.textTheme.titleSmall!.copyWith(color: Colors.grey),
+                      ),
+                    ),
+                  Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(top: 16),
+                      separatorBuilder: (context, index) =>
+                          Divider(color: theme.dividerColor),
+                      itemCount: state.coinsList.length,
+                      itemBuilder: (context, i) {
+                        final coin = state.coinsList[i];
+                        return CryptoCoinTile(coin: coin);
+                      },
+                    ),
+                  ),
+                ],
               );
             }
             if (state is CryptoListLoadingFailure) {
+              final message = state.exception.toString();
+              final isOffline = message.contains("cached");
+
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Something went wrong",
+                      isOffline ? "No internet connection" : "Something went wrong",
                       style: theme.textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "Please try again later",
+                      isOffline
+                          ? "Please check your connection and try again"
+                          : "Please try again later",
                       style: theme.textTheme.labelSmall,
                     ),
                     const SizedBox(height: 30),
