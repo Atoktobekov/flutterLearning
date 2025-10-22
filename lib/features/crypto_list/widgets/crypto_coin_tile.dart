@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 
 class CryptoCoinTile extends StatelessWidget {
@@ -16,7 +16,13 @@ class CryptoCoinTile extends StatelessWidget {
         ? coin.details.priceUSD : roundTo(coin.details.priceUSD, 3);
     final theme = Theme.of(context);
     return ListTile(
-      leading: Image.network(coin.details.fullImageUrl),
+      leading: CachedNetworkImage(
+        imageUrl: coin.details.fullImageUrl,
+        width: 40,
+        height: 40,
+        placeholder: (context, url) => const CircularProgressIndicator(strokeWidth: 2),
+        errorWidget: (context, url, error) => Image.asset('assets/images/placeholder.png', width: 40, height: 40),
+      ),
 
       title: Text(coin.name, style: theme.textTheme.bodyMedium),
 
