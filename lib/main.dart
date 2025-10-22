@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
@@ -22,11 +23,17 @@ Future<void> main() async {
       printStateFullData: true,
     ),
   );
-
   GetIt.instance.registerSingleton(talker);
 
-  final dio = Dio();
+  const cryptoCoinsBoxKey = "crypto_coins_box";
 
+  await  Hive.initFlutter();
+  Hive.registerAdapter(CryptoCoinAdapter());
+  Hive.registerAdapter(CryptoCoinDetailsAdapter());
+
+  final cryptoCoinsBox = await Hive.openBox<CryptoCoin>(cryptoCoinsBoxKey);
+
+  final dio = Dio();
   dio.interceptors.add(
     TalkerDioLogger(
       settings: const TalkerDioLoggerSettings(printResponseData: false),
@@ -39,7 +46,7 @@ Future<void> main() async {
   );
 
   GetIt.instance.registerLazySingleton<IfCryptoCoinsRepository>(
-    () => CryptoCoinsRepository(dio: dio),
+    () => CryptoCoinsRepository(dio: dio, cryptoCoinsBox: cryptoCoinsBox),
   );
 
   FlutterError.onError = (details) =>
