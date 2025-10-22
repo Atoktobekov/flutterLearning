@@ -8,6 +8,7 @@ environment:
   sdk: ^3.8.0
 
 dependencies:
+  cached_network_image: ^3.4.1
   hive_flutter: ^1.1.0
   json_annotation: ^4.9.0
   firebase_core: ^4.2.0
@@ -38,4 +39,5 @@ flutter:
 
   assets:
      - assets/images/svg/
+     - assets/images/placeholder.png
 
