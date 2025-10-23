@@ -148,7 +148,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                   children: [
                     Padding(
                       padding: EdgeInsets.all(20),
-                      child: Text("Exception : ${state.exception}"),
+                      child: Text("${state.exception}"),
                     ),
                     const SizedBox(height: 10),
                     TextButton(

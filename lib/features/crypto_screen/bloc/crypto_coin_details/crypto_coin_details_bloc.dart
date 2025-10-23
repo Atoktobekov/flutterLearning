@@ -29,7 +29,6 @@ class CryptoCoinDetailsBloc
 
       final coinDetails = await coinsRepository.getCoinDetails(event.currencyCode);
 
-
       // TTL Filtering
       final lastUpdate = coinDetails.details.lastUpdate;
       final age = DateTime.now().difference(lastUpdate);
