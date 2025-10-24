@@ -4,6 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
+const String apiCall = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,BNB,AVAX,LTC,XRP,DOGE,ADA,TRX,XLM,LINK,UNI&tsyms=USD";
+
 class CryptoCoinsRepository implements IfCryptoCoinsRepository {
   CryptoCoinsRepository({required this.dio, required this.cryptoCoinsBox});
 
@@ -20,16 +22,17 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
       cryptoCoinsBox.putAll(cryptoCoinsMap);
 
       cryptoCoinsList.sort(
-            (a, b) => b.details.priceUSD.compareTo(a.details.priceUSD),
+        (a, b) => b.details.priceUSD.compareTo(a.details.priceUSD),
       );
       return cryptoCoinsList;
-
     } catch (e, st) {
-      GetIt.instance<Talker>().handle(e, st, "***ERROR from getCoinsList method***");
+      GetIt.instance<Talker>().handle(
+        e,
+        st,
+        "***ERROR from getCoinsList method***",
+      );
       rethrow;
     }
-
-
   }
 
   @override
@@ -39,7 +42,11 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
       cryptoCoinsBox.put(currencyCode, coin);
       return coin;
     } catch (e, st) {
-      GetIt.instance<Talker>().handle(e, st, "***ERROR from getCoinDetailsMethod***");
+      GetIt.instance<Talker>().handle(
+        e,
+        st,
+        "***ERROR from getCoinDetailsMethod***",
+      );
       return cryptoCoinsBox.get(currencyCode)!;
     }
   }
@@ -50,15 +57,13 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
   }
 
   Future<List<CryptoCoin>> _fetchCoinsListFromApi() async {
-    final response = await dio.get(
-      "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,BNB,AVAX,AID,DOV,CAG&tsyms=USD",
-    );
+    final response = await dio.get(apiCall);
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;
 
     final cryptoCoinsList = dataRaw.entries.map((entry) {
       final usdData =
-      (entry.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
+          (entry.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
 
       final details = CryptoCoinDetails.fromJson(usdData);
       return CryptoCoin(name: entry.key, details: details);
@@ -80,5 +85,3 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
     return CryptoCoin(name: currencyCode, details: details);
   }
 }
-
-
