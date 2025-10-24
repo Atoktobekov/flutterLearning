@@ -10,7 +10,6 @@ part 'crypto_coin_details_state.dart';
 
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
-
   CryptoCoinDetailsBloc(this.coinsRepository)
     : super(const CryptoCoinDetailsState()) {
     on<LoadCryptoCoinDetails>(_load);
@@ -27,16 +26,22 @@ class CryptoCoinDetailsBloc
         emit(const CryptoCoinDetailsLoading());
       }
 
-      final coinDetails = await coinsRepository.getCoinDetails(event.currencyCode);
+      final coinDetails = await coinsRepository.getCoinDetails(
+        event.currencyCode,
+      );
 
       // TTL Filtering
       final lastUpdate = coinDetails.details.lastUpdate;
       final age = DateTime.now().difference(lastUpdate);
 
-      if (age.inMinutes > 15) {
-        emit(CryptoCoinDetailsLoadingFailure(
-          Exception("Cached coin details are older than 15 minutes. Please enable internet."),
-        ));
+      if (age.inMinutes > 15 && (!isCagDovOrAid(event.currencyCode))) {
+        emit(
+          CryptoCoinDetailsLoadingFailure(
+            Exception(
+              "Cached coin details are older than 15 minutes. Please enable internet.",
+            ),
+          ),
+        );
         event.completer?.complete();
         return;
       }
@@ -44,9 +49,12 @@ class CryptoCoinDetailsBloc
       emit(CryptoCoinDetailsLoaded(coinDetails));
     } catch (e) {
       emit(CryptoCoinDetailsLoadingFailure(e));
-    }
-    finally{
+    } finally {
       event.completer?.complete();
     }
+  }
+
+  bool isCagDovOrAid(String name) {
+    return (name == "AID" || name == "DOV" || name == "CAG");
   }
 }
