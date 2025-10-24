@@ -33,7 +33,7 @@ class CryptoCoinDetailsBloc
       final lastUpdate = coinDetails.details.lastUpdate;
       final age = DateTime.now().difference(lastUpdate);
 
-      if (age.inMinutes > 15) {
+      if (age.inMinutes > 15 && coinsRepository.isDataFromCache()) {
         emit(
           CryptoCoinDetailsLoadingFailure(
             Exception(
