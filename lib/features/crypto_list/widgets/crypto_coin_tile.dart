@@ -11,9 +11,7 @@ class CryptoCoinTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedPrice =
-    (coin.name == "AID" || coin.name == 'DOV' || coin.name == "CAG")
-        ? coin.details.priceUSD : roundTo(coin.details.priceUSD, 3);
+    final formattedPrice = roundTo(coin.details.priceUSD, 3);
     final theme = Theme.of(context);
     return ListTile(
       leading: CachedNetworkImage(

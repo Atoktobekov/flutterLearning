@@ -103,7 +103,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                     BaseCard(
                       child: Center(
                         child: Text(
-                          '${roundTo(coin.name, coin.details.priceUSD)} \$',
+                          '${roundTo4(coin.details.priceUSD)} \$',
                           style: const TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w700,
@@ -117,19 +117,19 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                           _DataRow(
                             title: 'High 24 Hour',
                             value:
-                                '${roundTo(coin.name, coin.details.high24Hours)} \$',
+                                '${roundTo4(coin.details.high24Hours)} \$',
                           ),
                           const SizedBox(height: 10),
                           _DataRow(
                             title: 'Low 24 Hour',
                             value:
-                                '${roundTo(coin.name, coin.details.low24Hours)} \$',
+                                '${roundTo4(coin.details.low24Hours)} \$',
                           ),
                           const SizedBox(height: 10),
                           _DataRow(
                             title: 'Change 24 Hour',
                             value:
-                                '${roundTo(coin.name, coin.details.change24Hours)} \$',
+                                '${roundTo4(coin.details.change24Hours)} \$',
                           ),
                           const SizedBox(height: 10),
                           _DataRow(title: 'Last update', value: formattedDate),
@@ -196,10 +196,7 @@ class _DataRow extends StatelessWidget {
   }
 }
 
-double roundTo(String name, double value) {
-  if (name == "AID" || name == "CAG" || name == "DOV") {
-    return value;
-  }
-  num mod = pow(10.0, 5);
+double roundTo4(double value) {
+  num mod = pow(10.0, 4);
   return ((value * mod).round().toDouble() / mod);
 }

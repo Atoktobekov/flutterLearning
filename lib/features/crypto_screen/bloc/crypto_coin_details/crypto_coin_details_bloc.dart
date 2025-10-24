@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
@@ -34,7 +33,7 @@ class CryptoCoinDetailsBloc
       final lastUpdate = coinDetails.details.lastUpdate;
       final age = DateTime.now().difference(lastUpdate);
 
-      if (age.inMinutes > 15 && (!isCagDovOrAid(event.currencyCode))) {
+      if (age.inMinutes > 15) {
         emit(
           CryptoCoinDetailsLoadingFailure(
             Exception(
@@ -52,9 +51,5 @@ class CryptoCoinDetailsBloc
     } finally {
       event.completer?.complete();
     }
-  }
-
-  bool isCagDovOrAid(String name) {
-    return (name == "AID" || name == "DOV" || name == "CAG");
   }
 }
