@@ -4,7 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
-const String apiCall = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,BNB,AVAX,LTC,XRP,DOGE,ADA,TRX,XLM,LINK,UNI&tsyms=USD";
+const String apiCallForList = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,BNB,AVAX,LTC,XRP,DOGE,ADA,TRX,XLM,LINK,UNI&tsyms=USD";
+bool _isDataFromCacheFlag = false;
 
 class CryptoCoinsRepository implements IfCryptoCoinsRepository {
   CryptoCoinsRepository({required this.dio, required this.cryptoCoinsBox});
@@ -42,11 +43,8 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
       cryptoCoinsBox.put(currencyCode, coin);
       return coin;
     } catch (e, st) {
-      GetIt.instance<Talker>().handle(
-        e,
-        st,
-        "***ERROR from getCoinDetailsMethod***",
-      );
+      GetIt.instance<Talker>().handle(e, st, "***ERROR from getCoinDetailsMethod***");
+      _isDataFromCacheFlag = true;
       return cryptoCoinsBox.get(currencyCode)!;
     }
   }
@@ -56,8 +54,13 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
     return cryptoCoinsBox.values.toList();
   }
 
+  @override
+  bool isDataFromCache() {
+    return _isDataFromCacheFlag;
+  }
+
   Future<List<CryptoCoin>> _fetchCoinsListFromApi() async {
-    final response = await dio.get(apiCall);
+    final response = await dio.get(apiCallForList);
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;
 
