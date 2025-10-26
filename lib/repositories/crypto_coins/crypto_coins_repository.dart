@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
@@ -41,6 +41,7 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
     try {
       final coin = await _fetchCoinDetailsFromApi(currencyCode);
       cryptoCoinsBox.put(currencyCode, coin);
+      _isDataFromCacheFlag = false;
       return coin;
     } catch (e, st) {
       GetIt.instance<Talker>().handle(e, st, "***ERROR from getCoinDetailsMethod***");

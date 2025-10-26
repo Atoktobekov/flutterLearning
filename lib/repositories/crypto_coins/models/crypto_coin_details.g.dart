@@ -8,7 +8,7 @@ part of 'crypto_coin_details.dart';
 
 class CryptoCoinDetailsAdapter extends TypeAdapter<CryptoCoinDetails> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   CryptoCoinDetails read(BinaryReader reader) {
@@ -17,13 +17,13 @@ class CryptoCoinDetailsAdapter extends TypeAdapter<CryptoCoinDetails> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CryptoCoinDetails(
-      priceUSD: fields[5] as double,
+      priceUSD: (fields[5] as num).toDouble(),
       imageUrl: fields[6] as String,
       toSymbol: fields[0] as String,
       lastUpdate: fields[1] as DateTime,
-      high24Hours: fields[2] as double,
-      low24Hours: fields[3] as double,
-      change24Hours: fields[4] as double,
+      high24Hours: (fields[2] as num).toDouble(),
+      low24Hours: (fields[3] as num).toDouble(),
+      change24Hours: (fields[4] as num).toDouble(),
     );
   }
 
@@ -68,7 +68,8 @@ CryptoCoinDetails _$CryptoCoinDetailsFromJson(Map<String, dynamic> json) =>
       imageUrl: json['IMAGEURL'] as String,
       toSymbol: json['TOSYMBOL'] as String,
       lastUpdate: CryptoCoinDetails._dateTimeFromJson(
-          (json['LASTUPDATE'] as num).toInt()),
+        (json['LASTUPDATE'] as num).toInt(),
+      ),
       high24Hours: (json['HIGH24HOUR'] as num).toDouble(),
       low24Hours: (json['LOW24HOUR'] as num).toDouble(),
       change24Hours: (json['CHANGE24HOUR'] as num).toDouble(),

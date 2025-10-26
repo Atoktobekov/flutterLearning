@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
@@ -11,6 +10,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,7 +8,7 @@ part of 'crypto_coin.dart';
 
 class CryptoCoinAdapter extends TypeAdapter<CryptoCoin> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   CryptoCoin read(BinaryReader reader) {

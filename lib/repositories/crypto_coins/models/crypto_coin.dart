@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:learning/repositories/crypto_coins/crypto_coins.dart';
 
 part 'crypto_coin.g.dart';
