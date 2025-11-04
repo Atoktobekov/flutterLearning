@@ -7,17 +7,18 @@ This project displays live cryptocurrency prices such as **Bitcoin**, **Ethereum
 
 ## ✨ Features
 
-- 📊 **Main screen** with real-time prices of popular cryptocurrencies  
+- 📊 **Main screen** with real-time prices of popular cryptocurrencies
+- 📈 **Detailed coin screen** — tap on a coin to view its stats and info  
 - ⚡️ **BLoC** for state management  
 - 🧩 **Equatable** for efficient state comparison and app performance optimization  
 - 🌐 **Dio** for API communication  
-- 🧱 **GetIt** for dependency injection and singleton management  
+- 🧱 **GetIt** for dependency injection and singleton management
+- 📋 **Talker** for logging 
 
 ---
 
 ## 🚧 Upcoming Features
 
-- 📈 **Detailed coin screen** — tap on a coin to view its stats and info  
 - 🌞 **Light theme support**  
 - ⚙️ **Basic settings screen**  
 
