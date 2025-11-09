@@ -13,47 +13,49 @@ import 'firebase_options.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
 
-  final talker = TalkerFlutter.init();
-  Bloc.observer = TalkerBlocObserver(
-    talker: talker,
-    settings: const TalkerBlocLoggerSettings(
-      printEventFullData: true,
-      printStateFullData: true,
-    ),
-  );
-  GetIt.instance.registerSingleton(talker);
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  const cryptoCoinsBoxKey = "crypto_coins_box";
-
-  await  Hive.initFlutter();
-  Hive.registerAdapter(CryptoCoinAdapter());
-  Hive.registerAdapter(CryptoCoinDetailsAdapter());
-
-  final cryptoCoinsBox = await Hive.openBox<CryptoCoin>(cryptoCoinsBoxKey);
-
-  final dio = Dio();
-  dio.interceptors.add(
-    TalkerDioLogger(
-      settings: const TalkerDioLoggerSettings(printResponseData: false),
+    final talker = TalkerFlutter.init();
+    Bloc.observer = TalkerBlocObserver(
       talker: talker,
-    ),
-  );
+      settings: const TalkerBlocLoggerSettings(
+        printEventFullData: true,
+        printStateFullData: true,
+      ),
+    );
+    GetIt.instance.registerSingleton(talker);
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+    const cryptoCoinsBoxKey = "crypto_coins_box";
 
-  GetIt.instance.registerLazySingleton<IfCryptoCoinsRepository>(
-    () => CryptoCoinsRepository(dio: dio, cryptoCoinsBox: cryptoCoinsBox),
-  );
+    await Hive.initFlutter();
+    Hive.registerAdapter(CryptoCoinAdapter());
+    Hive.registerAdapter(CryptoCoinDetailsAdapter());
+    final cryptoCoinsBox = await Hive.openBox<CryptoCoin>(cryptoCoinsBoxKey);
 
-  FlutterError.onError = (details) =>
-      GetIt.instance<Talker>().handle(details.exception, details.stack);
+    final dio = Dio();
+    dio.interceptors.add(
+      TalkerDioLogger(
+        settings: const TalkerDioLoggerSettings(printResponseData: false),
+        talker: talker,
+      ),
+    );
 
-  runZonedGuarded(
-    () => runApp(const CryptoCurrenciesListApp()),
-    (error, stackTrace) => GetIt.instance<Talker>().handle(error, stackTrace),
-  );
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    GetIt.instance.registerLazySingleton<IfCryptoCoinsRepository>(
+          () => CryptoCoinsRepository(dio: dio, cryptoCoinsBox: cryptoCoinsBox),
+    );
+
+    FlutterError.onError = (details) =>
+        GetIt.instance<Talker>().handle(details.exception, details.stack);
+
+    runApp(const CryptoCurrenciesListApp());
+  }, (error, stackTrace) {
+    GetIt.instance<Talker>().handle(error, stackTrace);
+  });
+
 }
