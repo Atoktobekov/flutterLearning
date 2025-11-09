@@ -77,6 +77,7 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
                   Expanded(
                     child: ListView.separated(
                       padding: const EdgeInsets.only(top: 16),
+                      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                       separatorBuilder: (context, index) =>
                           Divider(color: theme.dividerColor),
                       itemCount: state.coinsList.length,
