@@ -13,7 +13,8 @@ This project displays live cryptocurrency prices such as **Bitcoin**, **Ethereum
 - 🧩 **Equatable** for efficient state comparison and app performance optimization  
 - 🌐 **Dio** for API communication  
 - 🧱 **GetIt** for dependency injection and singleton management
-- 📋 **Talker** for logging 
+- 📋 **Talker** for logging
+- 📊 **Hive_ce** for caching data
 
 ---
 
@@ -43,6 +44,8 @@ created to understand:
 | HTTP Client | [`dio`](https://pub.dev/packages/dio) |
 | Dependency Injection | [`get_it`](https://pub.dev/packages/get_it) |
 | Logging | [`talker`](https://pub.dev/packages/talker_flutter) |
+| Data Caching | [`Hive_ce`](https://pub.dev/packages/hive_ce) |
+
 
 ---
 ## 📸 Screenshots
