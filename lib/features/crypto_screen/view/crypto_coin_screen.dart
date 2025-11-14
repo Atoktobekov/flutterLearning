@@ -68,8 +68,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
               ).format(coin.details.lastUpdate);
 
               return SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                // <-- IMPORTANT!
+                physics: const AlwaysScrollableScrollPhysics(), // <-- IMPORTANT!
                 padding: const EdgeInsets.symmetric(
                   vertical: 16,
                   horizontal: 20,
@@ -147,7 +146,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(35),
                       child: Text("${state.exception}"),
                     ),
                     const SizedBox(height: 10),

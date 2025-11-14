@@ -30,7 +30,7 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
       GetIt.instance<Talker>().handle(
         e,
         st,
-        "***ERROR from getCoinsList method***",
+        "[GetCoinsListError]",
       );
       rethrow;
     }
@@ -44,7 +44,7 @@ class CryptoCoinsRepository implements IfCryptoCoinsRepository {
       _isDataFromCacheFlag = false;
       return coin;
     } catch (e, st) {
-      GetIt.instance<Talker>().handle(e, st, "***ERROR from getCoinDetailsMethod***");
+      GetIt.instance<Talker>().handle(e, st, "[getCoinDetailsError]");
       _isDataFromCacheFlag = true;
       return cryptoCoinsBox.get(currencyCode)!;
     }

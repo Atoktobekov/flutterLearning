@@ -55,7 +55,7 @@ class CryptoListBloc extends Bloc<CryptoListEvent, CryptoListState> {
           emit(CryptoListLoadingFailure(exception));
         }
 
-        GetIt.instance<Talker>().handle(exception, stackTrace);
+        GetIt.instance<Talker>().handle(exception, stackTrace, "[CryptoListBlocError]");
       } finally {
         event.completer?.complete();
       }

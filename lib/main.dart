@@ -51,11 +51,11 @@ Future<void> main() async {
     );
 
     FlutterError.onError = (details) =>
-        GetIt.instance<Talker>().handle(details.exception, details.stack);
+        GetIt.instance<Talker>().handle(details.exception, details.stack, "[FlutterError]");
 
     runApp(const CryptoCurrenciesListApp());
   }, (error, stackTrace) {
-    GetIt.instance<Talker>().handle(error, stackTrace);
+    GetIt.instance<Talker>().handle(error, stackTrace, "[runZonedGuardedError]");
   });
 
 }
